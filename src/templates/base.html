@@ -28,10 +28,27 @@ Users
                         Bob
                     </a>
                 </li>
+                <li>
+                    <a href="{{ url_for('greeter') }}">
+                        Greeter
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block content %}
+    {% block page_content %}
+    {% endblock %}
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 {% block scripts %}
     {{ super() }}
