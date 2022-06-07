@@ -1,0 +1,27 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: flask
+      MYSQL_PASSWORD: flask
+      MYSQL_DATABASE: db
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+
+  python-example:
+    build: .
+    restart: always
+    environment:
+      MYSQL_HOSTNAME: mysql
+      MYSQL_USER: flask
+      MYSQL_PASSWORD: flask
+      MYSQL_DATABASE: db
+    ports:
+      - "80:5000"
